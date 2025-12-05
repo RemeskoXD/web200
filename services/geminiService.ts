@@ -1,10 +1,21 @@
 import { GoogleGenAI } from "@google/genai";
 
-// Initialize Gemini client using the environment variable directly as required
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// We do NOT initialize the client globally anymore.
+// This prevents the "Uncaught Error: An API Key must be set" crash on page load.
 
 export const getHealthTip = async (userQuery: string): Promise<string> => {
   try {
+    // Access the key inside the function
+    const apiKey = process.env.API_KEY;
+
+    if (!apiKey) {
+      console.error("API Key is missing. Please set VITE_GOOGLE_GENAI_API_KEY in your environment variables.");
+      return "Omlouvám se, momentálně nemohu odpovědět (chybí konfigurace systému). Zkuste to prosím později.";
+    }
+
+    // Initialize client only when needed
+    const ai = new GoogleGenAI({ apiKey: apiKey });
+
     const model = 'gemini-2.5-flash';
     const systemInstruction = `
       Jsi asistent pro web výživového poradce Ondřeje Hlatkého. 
