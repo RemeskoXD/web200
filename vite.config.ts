@@ -11,7 +11,7 @@ export default defineConfig({
   server: {
     // Povolí přístup zvenčí (nezbytné pro Docker/Coolify)
     host: '0.0.0.0', 
-    // Standardní port. Ujistěte se, že v Coolify máte v "Ports Exposes" také 3000
+    // Nastaveno na 3001 dle požadavku
     port: 3000, 
   },
   
