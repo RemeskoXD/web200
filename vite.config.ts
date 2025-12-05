@@ -1,15 +1,22 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  // TOTO JE KLÍČOVÉ PRO COOLIFY A OPRAVU BÍLÉ OBRAZOVKY
+  
+  // TOTO JE KLÍČOVÉ: Zajistí, že prohlížeč najde soubory i na podstránkách
   base: './', 
+  
   server: {
-    port: 3001, // Požadovaný port
-    host: '0.0.0.0', // Povolí přístup zvenčí (důležité pro Docker/Coolify)
+    // Povolí přístup zvenčí (nezbytné pro Docker/Coolify)
+    host: '0.0.0.0', 
+    // Standardní port. Ujistěte se, že v Coolify máte v "Ports Exposes" také 3000
+    port: 3000, 
   },
+  
   build: {
     outDir: 'dist',
+    emptyOutDir: true, // Pro jistotu vyčistí složku před každým buildem
   }
 });
